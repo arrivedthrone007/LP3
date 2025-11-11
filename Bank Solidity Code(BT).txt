@@ -1,0 +1,34 @@
+//SPDX-License-Identifier :UNLICENSED
+pragma solidity ^0.8.0;
+
+contract Bank{
+
+    uint256 balance =0;
+    address public AccOwner;
+
+    constructor(){
+        AccOwner = msg.sender;
+    }
+
+
+    //Deposite
+
+    function Deposite() public payable  {
+        require(AccOwner == msg.sender,"You are not an account owner");
+        require(msg.value > 0,"Amount should be greater than zero");
+        balance += msg.value; 
+    }
+
+    //Withdraw
+    function Withdraw(uint256 amount)public payable{
+        require(AccOwner == msg.sender,"You are not the owner of this account");
+        require(balance >= amount,"Insufficient Balance");
+        balance -=  amount;
+    }
+    //Showbalance
+    function showBalance() public view returns(uint256){
+        require(AccOwner == msg.sender,"You are not the owner of this account");
+        return balance;
+    }
+
+}
